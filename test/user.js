@@ -1,13 +1,13 @@
-var mongoose    =   require("mongoose");
+var mongoose     = require("mongoose");
 // set Promise provider to bluebird
 mongoose.Promise = require('bluebird');
-var User     =   require('../models/user');
+var User         = require('../models/user');
 //Require the dev-dependencies
-var chai        =   require('chai');
-var chaiHttp    =   require('chai-http');
+var chai         = require('chai');
+var chaiHttp     = require('chai-http');
 
-var server      =   require('../server');
-//var server      = 'http://localhost:4200';
+//var server       = require('../server');
+var server      = 'http://localhost:4200';
 
 chai.use(chaiHttp);
 
@@ -88,7 +88,8 @@ describe('Users', () => {
                 ndocument: 29799662,
                 documentTypeCode: "DNI",
                 sex: "M",
-                email:"String2@test.com"
+                email:"String2@test.com",
+                roleCodes:["FR","MD"]
             }
             chai.request(server)
             .post('/api/' + process.env.API_VERSION + '/users')
@@ -103,6 +104,7 @@ describe('Users', () => {
                 expect(res.body.user).to.have.property('documentTypeCode');
                 expect(res.body.user).to.have.property('sex');
                 expect(res.body.user).to.have.property('email');
+                expect(res.body.user).to.have.property('roleCodes');
             })
             .catch(function (err) {
                 console.log("Promise Rejected");
@@ -111,13 +113,15 @@ describe('Users', () => {
   });
   describe('/GET/:id user', () => {
       it('it should GET a user by the given id', () => {
-        var user = new User({ name: "nombre3 test",
-                                    surname: "Apellido3",
-                                    ndocument: 29799663,
-                                    documentTypeCode: "DNI",
-                                    sex: "M",
-                                    email:"String3@test.com"
-                                });
+        var user = new User({ 
+                            name: "nombre3 test",
+                            surname: "Apellido3",
+                            ndocument: 29799663,
+                            documentTypeCode: "DNI",
+                            sex: "M",
+                            email:"String3@test.com",
+                            roleCodes:["FR","MD"]
+                        });
         user.save((err, user) => {
             chai.request(server)
             .get('/api/' + process.env.API_VERSION + '/users/' + user.id)
@@ -131,6 +135,7 @@ describe('Users', () => {
                 expect(res.body.user).to.have.property('documentTypeCode');
                 expect(res.body.user).to.have.property('sex');
                 expect(res.body.user).to.have.property('email');
+                expect(res.body.user).to.have.property('roleCodes');
                 expect(res.body).to.have.property('_id').eql(user.id);
             })
             .catch(function (err) {
@@ -142,22 +147,26 @@ describe('Users', () => {
   });
   describe('/PUT/:id user', () => {
       it('it should UPDATE a user given the id', () => {
-        var user = new User({   name: "nombre4 test",
-                                surname: "Apellido4",
-                                ndocument: 29799664,
-                                documentTypeCode: "DNI",
-                                sex: "M",
-                                email:"String4@test.com"
+        var user = new User({   
+                             name: "nombre4 test",
+                             surname: "Apellido4",
+                             ndocument: 29799664,
+                             documentTypeCode: "DNI",
+                             sex: "M",
+                             email:"String4@test.com",
+                             roleCodes:["FR","MD"]
                             })
         user.save((err, user) => {
                 chai.request(server)
                 .put('/api/' + process.env.API_VERSION + '/users/' + user.id)
-                .send({ name: "nombre4",
+                .send({ 
+                        name: "nombre4",
                         surname: "Apellido",
                         ndocument: 29799665,
                         documentTypeCode: "DNI",
                         sex: "M",
-                        email:"String4@test.com"
+                        email:"String4@test.com",
+                        roleCodes:["FR","MD"]
                     })
                 .then(function (res) {
                     expect(res).to.have.status(200);
@@ -178,13 +187,15 @@ describe('Users', () => {
   */
   describe('/DELETE/:id user', () => {
       it('it should DELETE a user given the id', () => {
-        var user = new User({ name: "nombre5 test",
-                                    surname: "Apellido5",
-                                    ndocument: 29800666,
-                                    documentTypeCode: "DNI",
-                                    sex: "M",
-                                    email:"String5@test.com"
-                                })
+        var user = new User({ 
+                            name: "nombre5 test",
+                            surname: "Apellido5",
+                            ndocument: 29800666,
+                            documentTypeCode: "DNI",
+                            sex: "M",
+                            email:"String5@test.com",
+                            roleCodes:["FR","MD"]
+                        })
         user.save((err, user) => {
                 chai.request(server)
                 .DELETE('/api/' + process.env.API_VERSION + '/users/' + user.id)

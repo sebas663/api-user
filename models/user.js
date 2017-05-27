@@ -11,7 +11,8 @@ var UserSchema = new Schema({
         documentTypeCode: String,
         roleCode: String,
         sex: String,
-        email:String
+        email:String,
+        roleCodes : [String]
 });
 // the schema is useless so far
 // we need to create a model using it

@@ -45,7 +45,8 @@ router.route('/users')
                 ndocument:        { isRequired: true },
                 documentTypeCode: { isRequired: true },
                 sex:              { isRequired: true },
-                email:            { isEmail: true, normalizeEmail: true, isRequired: true }
+                email:            { isEmail: true, normalizeEmail: true, isRequired: true },
+                roleCodes :       { isRequired: true }
               },
               headers: {
                 'content-type': { isRequired: true, equals: 'application/json' }
@@ -60,7 +61,8 @@ router.route('/users')
                   ndocument: req.body.ndocument,
                   documentTypeCode: req.body.documentTypeCode,
                   sex: req.body.sex,
-                  email:req.body.email
+                  email:req.body.email,
+                  roleCodes:req.body.roleCodes
             });
             var promise = user.save();
             promise.then(function(user) {
@@ -109,7 +111,8 @@ router.route('/user/:idUser')
                 user.ndocument = req.body.ndocument,
                 user.documentTypeCode = req.body.documentTypeCode,
                 user.sex = req.body.sex,
-                user.email = req.body.email
+                user.email = req.body.email,
+                roleCodes = req.body.roleCodes
                 return user.save(); // returns a promise
             }
           })
