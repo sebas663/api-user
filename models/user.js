@@ -3,16 +3,17 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-        name: String,
-        surname: String,
-        login: String,
-        password: String,
-        ndocument: {type: Number, unique: true },
-        documentTypeCode: String,
-        roleCode: String,
-        sex: String,
-        email:String,
-        roleCodes : [String]
+        name : String,
+        surname : String,
+        login : String,
+        password : String,
+        ndocument : {type : Number, unique : true },
+        documentTypeCode : String,
+        roleCode : String,
+        sex : String,
+        email : String,
+        roleCodes : [String],
+        professionCode : String
 });
 // the schema is useless so far
 // we need to create a model using it

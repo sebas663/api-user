@@ -59,28 +59,6 @@ describe('Users', () => {
                 console.log("Promise Rejected");
             })
       });
-      it('when wrong email added, should return a 400 ok response and a single error', () => {
-        var user = {
-                name: "nombre2 test",
-                surname: "Apellido2",
-                ndocument: 29799661,
-                documentTypeCode: "DNI",
-                sex: "M",
-                email:"String2est.com"
-            }
-            chai.request(server)
-            .post('/api/' + process.env.API_VERSION + '/users')
-            .send(user)
-            .then(function (res) {
-                expect(res).to.have.status(200);
-                expect(res.body).to.be.a('object');
-                expect(res.body).to.have.property('errors');
-                expect(res.body.errors).to.have.property('email');
-            })
-            .catch(function (err) {
-                console.log("Promise Rejected");
-            })
-      });
       it('it should POST a user ', () => {
         var user = {
                 name: "nombre2 test",
@@ -89,7 +67,8 @@ describe('Users', () => {
                 documentTypeCode: "DNI",
                 sex: "M",
                 email:"String2@test.com",
-                roleCodes:["FR","MD"]
+                roleCodes:["FR","MD"],
+                professionCode:"PL"
             }
             chai.request(server)
             .post('/api/' + process.env.API_VERSION + '/users')
@@ -105,6 +84,7 @@ describe('Users', () => {
                 expect(res.body.user).to.have.property('sex');
                 expect(res.body.user).to.have.property('email');
                 expect(res.body.user).to.have.property('roleCodes');
+                expect(res.body.user).to.have.property('professionCode');
             })
             .catch(function (err) {
                 console.log("Promise Rejected");
@@ -120,7 +100,8 @@ describe('Users', () => {
                             documentTypeCode: "DNI",
                             sex: "M",
                             email:"String3@test.com",
-                            roleCodes:["FR","MD"]
+                            roleCodes:["FR","MD"],
+                            professionCode:"GH"
                         });
         user.save((err, user) => {
             chai.request(server)
@@ -136,6 +117,7 @@ describe('Users', () => {
                 expect(res.body.user).to.have.property('sex');
                 expect(res.body.user).to.have.property('email');
                 expect(res.body.user).to.have.property('roleCodes');
+                expect(res.body.user).to.have.property('professionCode');
                 expect(res.body).to.have.property('_id').eql(user.id);
             })
             .catch(function (err) {
@@ -154,7 +136,8 @@ describe('Users', () => {
                              documentTypeCode: "DNI",
                              sex: "M",
                              email:"String4@test.com",
-                             roleCodes:["FR","MD"]
+                             roleCodes:["FR","MD"],
+                             professionCode:"JK"
                             })
         user.save((err, user) => {
                 chai.request(server)
@@ -166,7 +149,8 @@ describe('Users', () => {
                         documentTypeCode: "DNI",
                         sex: "M",
                         email:"String4@test.com",
-                        roleCodes:["FR","MD"]
+                        roleCodes:["FR","MD"],
+                        professionCode:"LK"
                     })
                 .then(function (res) {
                     expect(res).to.have.status(200);
@@ -175,6 +159,7 @@ describe('Users', () => {
                     expect(res.body.user).to.have.property('name').eql("nombre4");
                     expect(res.body.user).to.have.property('surname').eql("Apellido");
                     expect(res.body.user).to.have.property('ndocument').eql(29799665);  
+                    expect(res.body.user).to.have.property('professionCode').eql("LK");
                 })
                 .catch(function (err) {
                     console.log("Promise Rejected");
@@ -194,7 +179,8 @@ describe('Users', () => {
                             documentTypeCode: "DNI",
                             sex: "M",
                             email:"String5@test.com",
-                            roleCodes:["FR","MD"]
+                            roleCodes:["FR","MD"],
+                            professionCode:"GH"
                         })
         user.save((err, user) => {
                 chai.request(server)
